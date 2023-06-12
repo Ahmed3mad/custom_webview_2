@@ -5,8 +5,7 @@ authors:
 - Matej Snovák <matej.snovak@powerplay.studio>
 version: 1.0.10
 environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=2.0.0"
+  sdk: '>=2.10.0 <3.0.0'
 
 flutter:
   plugin:
@@ -22,6 +21,5 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
-  mocktail: ^0.1.1
   flutter_test:
     sdk: flutter

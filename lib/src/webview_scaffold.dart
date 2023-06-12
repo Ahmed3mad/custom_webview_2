@@ -8,9 +8,9 @@ import 'javascript_channel.dart';
 
 class WebviewScaffold extends StatefulWidget {
   const WebviewScaffold({
-    Key? key,
+    Key key,
     this.appBar,
-    required this.url,
+    @required this.url,
     this.id = '1',
     this.headers,
     this.javascriptChannels = const <JavascriptChannel>{},
@@ -44,39 +44,39 @@ class WebviewScaffold extends StatefulWidget {
     this.allowsInlineMediaPlayback,
   }) : super(key: key);
 
-  final PreferredSizeWidget? appBar;
+  final PreferredSizeWidget appBar;
   final String url;
   final String id;
-  final Map<String, String>? headers;
+  final Map<String, String> headers;
   final Set<JavascriptChannel> javascriptChannels;
   final bool withJavascript;
   final bool clearCache;
   final bool clearCookies;
   final bool mediaPlaybackRequiresUserGesture;
   final bool enableAppScheme;
-  final String? userAgent;
+  final String userAgent;
   final bool primary;
-  final List<Widget>? persistentFooterButtons;
-  final Widget? bottomNavigationBar;
+  final List<Widget> persistentFooterButtons;
+  final Widget bottomNavigationBar;
   final bool withZoom;
   final bool displayZoomControls;
   final bool withLocalStorage;
   final bool withLocalUrl;
-  final String? localUrlScope;
+  final String localUrlScope;
   final bool scrollBar;
   final bool supportMultipleWindows;
   final bool appCacheEnabled;
   final bool hidden;
-  final Widget? initialChild;
+  final Widget initialChild;
   final bool allowFileURLs;
   final bool resizeToAvoidBottomInset;
-  final String? invalidUrlRegex;
+  final String invalidUrlRegex;
   final bool geolocationEnabled;
   final bool withOverviewMode;
   final bool useWideViewPort;
   final bool debuggingEnabled;
   final bool ignoreSSLErrors;
-  final bool? allowsInlineMediaPlayback;
+  final bool allowsInlineMediaPlayback;
 
   @override
   _WebviewScaffoldState createState() => _WebviewScaffoldState();
@@ -84,11 +84,11 @@ class WebviewScaffold extends StatefulWidget {
 
 class _WebviewScaffoldState extends State<WebviewScaffold> {
   final webviewReference = FlutterMultipleWebviewPlugin();
-  Rect? _rect;
-  Timer? _resizeTimer;
-  StreamSubscription<WebViewStateChanged>? _onStateChanged;
+  Rect _rect;
+  Timer _resizeTimer;
+  StreamSubscription<WebViewStateChanged> _onStateChanged;
 
-  StreamSubscription? _onBack;
+  StreamSubscription _onBack;
 
   @override
   void initState() {
@@ -125,12 +125,12 @@ class _WebviewScaffoldState extends State<WebviewScaffold> {
 
   /// Equivalent to [Navigator.of(context)._history.last].
   Route<dynamic> get _topMostRoute {
-    Route? topMost;
+    Route topMost;
     Navigator.popUntil(context, (route) {
       topMost = route;
       return true;
     });
-    return topMost!;
+    return topMost;
   }
 
   @override
@@ -193,7 +193,7 @@ class _WebviewScaffoldState extends State<WebviewScaffold> {
               _resizeTimer?.cancel();
               _resizeTimer = Timer(const Duration(milliseconds: 250), () {
                 // avoid resizing to fast when build is called multiple time
-                webviewReference.resize(_rect!);
+                webviewReference.resize(_rect);
               });
             }
           }
@@ -207,9 +207,9 @@ class _WebviewScaffoldState extends State<WebviewScaffold> {
 
 class _WebviewPlaceholder extends SingleChildRenderObjectWidget {
   const _WebviewPlaceholder({
-    Key? key,
-    required this.onRectChanged,
-    Widget? child,
+    Key key,
+    @required this.onRectChanged,
+    Widget child,
   }) : super(key: key, child: child);
 
   final ValueChanged<Rect> onRectChanged;
@@ -230,15 +230,15 @@ class _WebviewPlaceholder extends SingleChildRenderObjectWidget {
 
 class _WebviewPlaceholderRender extends RenderProxyBox {
   _WebviewPlaceholderRender({
-    RenderBox? child,
-    ValueChanged<Rect>? onRectChanged,
+    RenderBox child,
+    ValueChanged<Rect> onRectChanged,
   })  : _callback = onRectChanged,
         super(child);
 
-  ValueChanged<Rect>? _callback;
-  Rect? _rect;
+  ValueChanged<Rect> _callback;
+  Rect _rect;
 
-  Rect get rect => _rect!;
+  Rect get rect => _rect;
 
   set onRectChanged(ValueChanged<Rect> callback) {
     if (callback != _callback) {
@@ -249,7 +249,7 @@ class _WebviewPlaceholderRender extends RenderProxyBox {
 
   void notifyRect() {
     if (_callback != null && _rect != null) {
-      _callback!(_rect!);
+      _callback(_rect);
     }
   }
 

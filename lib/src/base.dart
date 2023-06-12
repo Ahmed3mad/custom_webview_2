@@ -62,7 +62,7 @@ class FlutterMultipleWebviewPlugin {
       const MethodChannel methodChannel = const MethodChannel(_kChannel);
       _instance = FlutterMultipleWebviewPlugin.private(methodChannel);
     }
-    return _instance!;
+    return _instance;
   }
 
   @visibleForTesting
@@ -70,7 +70,7 @@ class FlutterMultipleWebviewPlugin {
     _channel.setMethodCallHandler(_handleMessages);
   }
 
-  static FlutterMultipleWebviewPlugin? _instance;
+  static FlutterMultipleWebviewPlugin _instance;
 
   final MethodChannel _channel;
 
@@ -201,7 +201,7 @@ class FlutterMultipleWebviewPlugin {
   Future<void> launch(
     String url, {
     String id = '1',
-    Map<String, String>? headers,
+    Map<String, String> headers,
     Set<JavascriptChannel> javascriptChannels = const <JavascriptChannel>{},
     bool withJavascript = true,
     bool clearCache = false,
@@ -209,24 +209,24 @@ class FlutterMultipleWebviewPlugin {
     bool mediaPlaybackRequiresUserGesture = true,
     bool hidden = false,
     bool enableAppScheme = true,
-    Rect? rect,
-    String? userAgent,
+    Rect rect,
+    String userAgent,
     bool withZoom = false,
     bool displayZoomControls = false,
     bool withLocalStorage = true,
     bool withLocalUrl = false,
-    String? localUrlScope,
+    String localUrlScope,
     bool withOverviewMode = false,
     bool scrollBar = true,
     bool supportMultipleWindows = false,
     bool appCacheEnabled = false,
     bool allowFileURLs = false,
     bool useWideViewPort = false,
-    String? invalidUrlRegex,
+    String invalidUrlRegex,
     bool geolocationEnabled = false,
     bool debuggingEnabled = false,
     bool ignoreSSLErrors = false,
-    bool? allowsInlineMediaPlayback,
+    bool allowsInlineMediaPlayback,
     bool androidOverScrollNever = false,
     bool transparentBackground = true,
     bool iosContentInsetAdjustmentBehaviorNever = false,
@@ -290,7 +290,7 @@ class FlutterMultipleWebviewPlugin {
   }
 
   /// Execute Javascript inside webview
-  Future<String?> evalJavascript(String code, {String id = '1'}) async {
+  Future<String> evalJavascript(String code, {String id = '1'}) async {
     final res =
         await _channel.invokeMethod<String>('eval', {'code': code, 'id': id});
     return res;
@@ -337,7 +337,7 @@ class FlutterMultipleWebviewPlugin {
 
   // Reload webview with a url
   Future<void> reloadUrl(String url,
-      {Map<String, String>? headers, String id = '1'}) async {
+      {Map<String, String> headers, String id = '1'}) async {
     final args = <String, dynamic>{'url': url, 'id': id};
     if (headers != null) {
       args['headers'] = headers;
@@ -381,7 +381,7 @@ class FlutterMultipleWebviewPlugin {
     final cookies = <String, String>{};
 
     if (cookiesString?.isNotEmpty == true) {
-      cookiesString!.split(';').forEach((String cookie) {
+      cookiesString.split(';').forEach((String cookie) {
         final split = cookie.split('=');
         cookies[split[0]] = split[1];
       });
@@ -411,14 +411,14 @@ class FlutterMultipleWebviewPlugin {
   void _handleJavascriptChannelMessage(
       final String channelName, final String message) {
     if (_javascriptChannels.containsKey(channelName))
-      _javascriptChannels[channelName]!
+      _javascriptChannels[channelName]
           .onMessageReceived(JavascriptMessage(message));
     else
       print('Channel "$channelName" is not exstis');
   }
 
   void _assertJavascriptChannelNamesAreUnique(
-      final Set<JavascriptChannel>? channels) {
+      final Set<JavascriptChannel> channels) {
     if (channels == null || channels.isEmpty) {
       return;
     }
@@ -455,7 +455,7 @@ class WebViewStateChanged {
   final String id;
   final WebViewState type;
   final String url;
-  final int? navigationType;
+  final int navigationType;
 }
 
 class WebViewHttpError {
