@@ -22,8 +22,7 @@ class ConsoleMessage {
     return ConsoleMessage(
       id: json['id'],
       message: json['message'],
-      messageLevel: ConsoleMessageLevel.values
-          .firstWhere((level) => level.name == json['messageLevel']),
+      messageLevel: ConsoleMessageLevel.LOG,
     );
   }
 
